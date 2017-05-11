@@ -4,7 +4,6 @@ import java.util.List;
 
 /**
  * @author Yurii Salimov (yuriy.alex.salimov@gmail.com)
- * @version 1.0
  */
 public class ListTester {
 
@@ -32,6 +31,15 @@ public class ListTester {
         int number = list.size() / 2;
         long startTime = getCurrentNanoTime();
         list.contains(number);
+        long endTime = getCurrentNanoTime();
+        return getInterval(startTime, endTime);
+    }
+
+    public static double testRemove(List<Integer> list) {
+        fillList(list, SIZE);
+        int number = list.size() / 2;
+        long startTime = getCurrentNanoTime();
+        list.remove(number);
         long endTime = getCurrentNanoTime();
         return getInterval(startTime, endTime);
     }
