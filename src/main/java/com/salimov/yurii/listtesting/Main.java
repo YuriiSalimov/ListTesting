@@ -10,6 +10,7 @@ import java.util.Vector;
  */
 public class Main {
 
+    private final static int SIZE = 1000000;
     private final static int COUNT = 10;
 
     public static void main(String[] args) {
@@ -19,16 +20,17 @@ public class Main {
         testList(Vector.class);
     }
 
-    private static void testList(Class<? extends List> clazz) {
+    private static void testList(final Class<? extends List> clazz) {
+        final ListTester tester = new ListTester(SIZE);
         double timeTestFilling = 0;
         double timeTestGettingByIndex = 0;
         double timeTestContains = 0;
         double timeTestRemove = 0;
         for (int i = 0; i < COUNT; i++) {
-            timeTestFilling += ListTester.testFilling(createList(clazz));
-            timeTestGettingByIndex += ListTester.testGettingByIndex(createList(clazz));
-            timeTestContains += ListTester.testContains(createList(clazz));
-            timeTestRemove += ListTester.testRemove(createList(clazz));
+            timeTestFilling += tester.testFilling(createList(clazz));
+            timeTestGettingByIndex += tester.testGettingByIndex(createList(clazz));
+            timeTestContains += tester.testContains(createList(clazz));
+            timeTestRemove += tester.testRemove(createList(clazz));
         }
         System.out.println(clazz.getSimpleName() + " result:");
         System.out.println("1) testFilling() = " + (timeTestFilling / COUNT) + " ms");
@@ -39,7 +41,7 @@ public class Main {
     }
 
     private static List<Integer> createList(Class clazz) {
-        List<Integer> result;
+        final List<Integer> result;
         if (clazz == ArrayList.class) {
             result = new ArrayList<>();
         } else if (clazz == LinkedList.class) {

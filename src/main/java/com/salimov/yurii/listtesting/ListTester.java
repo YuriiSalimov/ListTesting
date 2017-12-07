@@ -5,60 +5,65 @@ import java.util.List;
 /**
  * @author Yurii Salimov (yuriy.alex.salimov@gmail.com)
  */
-public class ListTester {
+public final class ListTester {
 
-    private final static int SIZE = 1000000;
     private final static int NANO = 1000000;
 
-    public static double testFilling(List<Integer> list) {
-        long startNanoTime = getCurrentNanoTime();
-        fillList(list, SIZE);
-        long endNanoTime = getCurrentNanoTime();
+    private final int size;
+
+    public ListTester(final int size) {
+        this.size = size;
+    }
+
+    public double testFilling(final List<Integer> list) {
+        final long startNanoTime = getCurrentNanoTime();
+        fillList(list);
+        final long endNanoTime = getCurrentNanoTime();
         return getInterval(startNanoTime, endNanoTime);
     }
 
-    public static double testGettingByIndex(List<Integer> list) {
-        fillList(list, SIZE);
-        int index = list.size() / 2;
-        long startNanoTime = getCurrentNanoTime();
+    public double testGettingByIndex(final List<Integer> list) {
+        fillList(list);
+        final int index = list.size() / 2;
+        final long startNanoTime = getCurrentNanoTime();
         list.get(index);
-        long endNanoTime = getCurrentNanoTime();
+        final long endNanoTime = getCurrentNanoTime();
         return getInterval(startNanoTime, endNanoTime);
     }
 
-    public static double testContains(List<Integer> list) {
-        fillList(list, SIZE);
-        int number = list.size() / 2;
-        long startTime = getCurrentNanoTime();
+    public double testContains(final List<Integer> list) {
+        fillList(list);
+        final int number = list.size() / 2;
+        final long startTime = getCurrentNanoTime();
         list.contains(number);
-        long endTime = getCurrentNanoTime();
+        final long endTime = getCurrentNanoTime();
         return getInterval(startTime, endTime);
     }
 
-    public static double testRemove(List<Integer> list) {
-        fillList(list, SIZE);
-        int number = list.size() / 2;
-        long startTime = getCurrentNanoTime();
+    public double testRemove(final List<Integer> list) {
+        fillList(list);
+        final int number = list.size() / 2;
+        final long startTime = getCurrentNanoTime();
         list.remove(number);
-        long endTime = getCurrentNanoTime();
+        final long endTime = getCurrentNanoTime();
         return getInterval(startTime, endTime);
     }
 
-    private static void fillList(List<Integer> list, int count) {
-        for (int i = 0; i < count; i++) {
+    private void fillList(final List<Integer> list) {
+        for (int i = 0; i < this.size; i++) {
             list.add(i);
         }
     }
 
-    private static long getCurrentNanoTime() {
+    private long getCurrentNanoTime() {
         return System.nanoTime();
     }
 
-    private static double getInterval(long startNanoTime, long endNanoTime) {
+    private double getInterval(final long startNanoTime, final long endNanoTime) {
         return convertToMillis(endNanoTime - startNanoTime);
     }
 
-    private static double convertToMillis(long nanotime) {
+    private double convertToMillis(final long nanotime) {
         return (double) nanotime / NANO;
     }
 }
